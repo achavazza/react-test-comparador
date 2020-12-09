@@ -79,12 +79,12 @@ function App() {
                 <div className="col s11">
                   <div className="row">
                     <div className="input-field col s6">
-                      <input type="number" name="price" default="0" placeholder="Enter First Name" value={x.price} onChange={e => handleInputChange(e, i)} />
-                      <label className="active" htmlFor="first_name2">Precio</label>
+                      <input id="price" type="number" name="price" default="0" placeholder="Ingrese el precio" value={x.price} onChange={e => handleInputChange(e, i)} />
+                      <label className="active" htmlFor="price">Precio</label>
                     </div>
                     <div className="input-field col s6">
-                      <input type="number" name="quantity" default="0" placeholder="Enter Last Name" value={x.quantity} onChange={e => handleInputChange(e, i)} />
-                      <label className="active" htmlFor="first_name2">Cantidad</label>
+                      <input id="quantity" type="number" name="quantity" default="0" placeholder="ingrese la cantidad" value={x.quantity} onChange={e => handleInputChange(e, i)} />
+                      <label className="active" htmlFor="quantity">Cantidad</label>
                     </div>
 
                   </div>
