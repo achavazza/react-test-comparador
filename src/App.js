@@ -55,13 +55,13 @@ function App() {
         <div className="collection-header teal lighten-2">
           <div className="row">
             <div className="col s12">
-              <h4 class="white-text">Comparador de precios</h4>
+              <h4 className="white-text">Comparador de precios</h4>
             </div>
           </div>
         </div>
         {inputList.map((x, i) => {
-          let removeButton = <button className="btn waves-light btn-floating" onClick={() => handleRemoveClick(i)}><i class="material-icons text-black">clear</i></button>;
-          let addButton = <button className="btn-floating btn-large waves-effect waves-light teal" onClick={handleAddClick}><i class="material-icons">add</i></button>;
+          let removeButton = <button className="btn waves-light btn-floating" onClick={() => handleRemoveClick(i)}><i className="material-icons text-black">clear</i></button>;
+          let addButton = <button className="btn-floating btn-large waves-effect waves-light teal" onClick={handleAddClick}><i className="material-icons">add</i></button>;
 
 
 
@@ -74,17 +74,17 @@ function App() {
           }
 
           return (
-            <div className="box" key={i} className={"collection-item " + lesser}>
+            <div key={i} className={"collection-item " + lesser}>
               <div className="row">
                 <div className="col s11">
                   <div className="row">
                     <div className="input-field col s6">
                       <input type="number" name="price" default="0" placeholder="Enter First Name" value={x.price} onChange={e => handleInputChange(e, i)} />
-                      <label className="active" for="first_name2">Precio</label>
+                      <label className="active" htmlFor="first_name2">Precio</label>
                     </div>
                     <div className="input-field col s6">
                       <input type="number" name="quantity" default="0" placeholder="Enter Last Name" value={x.quantity} onChange={e => handleInputChange(e, i)} />
-                      <label className="active" for="first_name2">Cantidad</label>
+                      <label className="active" htmlFor="first_name2">Cantidad</label>
                     </div>
 
                   </div>
@@ -93,7 +93,7 @@ function App() {
                   {inputList.length !== 1 && removeButton}
                 </div>
               </div>
-              <div class="fixed-action-btn">
+              <div className="fixed-action-btn">
                 {inputList.length - 1 === i && addButton}
               </div>
             </div>
