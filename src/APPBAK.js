@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import CurrencyInput from '@pismo/react-currency-input'
 
 function App() {
     const [inputList, setInputList] = useState([
         {
-            firstName: "",
-            lastName: ""
+            price: 0,
+            quantity: 0,
+            result: 0,
+        },
+        {
+            price: 0,
+            quantity: 0,
+            result: 0,
         }
     ]);
 
@@ -13,10 +20,17 @@ function App() {
         const { name, value } = e.target;
         const list = [...inputList];
         list[index][name] = value;
-        console.log(...inputList);
-        console.log(list);
-        console.log(value);
-        console.log(index);
+
+        const input = list[index];
+
+        let numFirst = parseInt(input.price);
+        let numSecond = parseInt(input.quantity);
+
+        list[index].result = numFirst / numSecond;
+
+        //console.log(numFirst, numSecond);
+        //console.log(value);
+        //console.log(index);
         setInputList(list);
     };
 
@@ -29,27 +43,69 @@ function App() {
 
     // handle click event of the Add button
     const handleAddClick = () => {
-        setInputList([...inputList, { firstName: "", lastName: "" }]);
+        setInputList([...inputList, { price: 0, quantity: 0, result: 0 }]);
     };
 
+
+
+
+
     return (
-        <div className="App">
-            <h3><a href="https://cluemediator.com">Clue Mediator</a></h3>
-            {inputList.map((x, i) => {
-                let removeButton = <button onClick={() => handleRemoveClick(i)}>Remove</button>;
-                let addButton = <button onClick={handleAddClick}>Add</button>;
-                return (
-                    <div className="box" key={inputList.i}>
-                        <input name="firstName" placeholder="Enter First Name" value={x.firstName} onChange={e => handleInputChange(e, i)} />
-                        <input name="lastName" placeholder="Enter Last Name" value={x.lastName} onChange={e => handleInputChange(e, i)} />
-                        <div className="btn-box">
-                            {inputList.length !== 1 && removeButton}
-                            {inputList.length - 1 === i && addButton}
+        <div className="App container">
+            <div className="mb-1 collection collection-header with-header">
+                <div className="collection-header teal lighten-2">
+                    <div className="row">
+                        <div className="col s12">
+                            <h4 className="white-text">Comparador de precios</h4>
                         </div>
                     </div>
-                );
-            })}
+                </div>
+                {inputList.map((x, i) => {
+                    let removeButton = <button className="btn waves-light btn-floating" onClick={() => handleRemoveClick(i)}><i className="material-icons text-black">clear</i></button>;
+                    let addButton = <button className="btn-floating btn-large waves-effect waves-light teal" onClick={handleAddClick}><i className="material-icons">add</i></button>;
+
+
+
+                    let min = Math.min(...inputList.map(el => el.result))
+                    let result = inputList.find(el => el.result === min)
+                    //console.log(result);
+                    let lesser = '';
+                    if (result === inputList[i]) {
+                        lesser = 'teal';
+                    }
+
+                    return (
+                        <div key={i} className={"collection-item " + lesser}>
+                            <div className="row">
+                                <div className="col s11">
+                                    <div className="row">
+                                        <div className="input-field col s6">
+
+                                            <input step="0.1" id={"price-" + i} type="number" name="price" default="0" placeholder="Ingrese el precio" value={x.price} onChange={e => handleInputChange(e, i)} />
+                                            <label className="active" htmlFor={"price-" + i}>Precio</label>
+                                        </div>
+                                        <div className="input-field col s6">
+                                            <input id={"quantity-" + i} type="number" name="quantity" default="0" placeholder="ingrese la cantidad" value={x.quantity} onChange={e => handleInputChange(e, i)} />
+                                            <label className="active" htmlFor={"quantity-" + i}>Cantidad</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div className="input-field col s1">
+                                    {inputList.length !== 1 && removeButton}
+                                </div>
+                            </div>
+                            <div className="fixed-action-btn">
+                                {inputList.length - 1 === i && addButton}
+                            </div>
+                        </div>
+                    );
+                })}
+
+            </div>
+
             <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+
         </div>
     );
 }

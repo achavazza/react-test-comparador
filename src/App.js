@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 
-function App() {
+class App extends Component {
+  /*  
+    state = [
+      { price: 0, quantity: 0, result: 0 },
+      { price: 0, quantity: 0, result: 0 },
+    ];
   const [inputList, setInputList] = useState([
     {
       price: 0,
@@ -13,11 +18,24 @@ function App() {
       result: 0,
     }
   ]);
+  
+  */
+    constructor(props) {
+      super(props);
+      this.state = {
+        list: [
+          { price: 0, quantity: 0, result: 0 },
+          { price: 0, quantity: 0, result: 0 }
+        ],
+      }
+    }
 
-  // handle input change
-  const handleInputChange = (e, index) => {
+ 
+ // handle input change
+ handleInputChange = (e, index) => {
+    
     const { name, value } = e.target;
-    const list = [...inputList];
+    const list = [...this.state.list];
     list[index][name] = value;
 
     const input = list[index];
@@ -30,25 +48,35 @@ function App() {
     //console.log(numFirst, numSecond);
     //console.log(value);
     //console.log(index);
-    setInputList(list);
+    //setInputList(list);
+    //console.log(list);
+    this.setState({ list: list });
   };
 
   // handle click event of the Remove button
-  const handleRemoveClick = index => {
+  handleRemoveClick = index => {
+    const inputList = this.state.list;
     const list = [...inputList];
     list.splice(index, 1);
-    setInputList(list);
+    //setInputList(list);
+    this.setState({ list: list });
   };
-
+  
   // handle click event of the Add button
-  const handleAddClick = () => {
-    setInputList([...inputList, { price: 0, quantity: 0, result: 0 }]);
+  handleAddClick = () => {
+    const inputList = this.state.list;
+    //setInputList([...inputList, { price: 0, quantity: 0, result: 0 }]);
+    this.setState({
+      list: [...inputList, { price: 0, quantity: 0, result: 0 }]
+    });
   };
 
 
 
 
 
+  render (){
+  let inputList = this.state.list;
   return (
     <div className="App container">
       <div className="mb-1 collection collection-header with-header">
@@ -60,8 +88,8 @@ function App() {
           </div>
         </div>
         {inputList.map((x, i) => {
-          let removeButton = <button className="btn waves-light btn-floating" onClick={() => handleRemoveClick(i)}><i className="material-icons text-black">clear</i></button>;
-          let addButton = <button className="btn-floating btn-large waves-effect waves-light teal" onClick={handleAddClick}><i className="material-icons">add</i></button>;
+          let removeButton = <button className="btn waves-light btn-floating" onClick={() => this.handleRemoveClick(i)}><i className="material-icons text-black">clear</i></button>;
+          let addButton = <button className="btn-floating btn-large waves-effect waves-light teal" onClick={this.handleAddClick}><i className="material-icons">add</i></button>;
 
 
 
@@ -79,11 +107,11 @@ function App() {
                 <div className="col s11">
                   <div className="row">
                     <div className="input-field col s6">
-                      <input id={"price-" + i} type="number" name="price" default="0" placeholder="Ingrese el precio" value={x.price} onChange={e => handleInputChange(e, i)} />
+                      <input step="0.1" id={"price-" + i} type="number" name="price" default="0" placeholder="Ingrese el precio" value={x.price} onChange={e => this.handleInputChange(e, i)} />
                       <label className="active" htmlFor={"price-" + i}>Precio</label>
                     </div>
                     <div className="input-field col s6">
-                      <input id={"quantity-" + i} type="number" name="quantity" default="0" placeholder="ingrese la cantidad" value={x.quantity} onChange={e => handleInputChange(e, i)} />
+                      <input id={"quantity-" + i} type="number" name="quantity" default="0" placeholder="ingrese la cantidad" value={x.quantity} onChange={e => this.handleInputChange(e, i)} />
                       <label className="active" htmlFor={"quantity-" + i}>Cantidad</label>
                     </div>
 
@@ -105,7 +133,7 @@ function App() {
         <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
 
     </div>
-  );
+  )};
 }
 
 export default App;
